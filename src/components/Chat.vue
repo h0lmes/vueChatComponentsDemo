@@ -35,6 +35,8 @@
 <script>
 import MessageList from "./MessageList.vue";
 
+const AVATAR = require("@/assets/avatar-default.jpg");
+
 export default {
   data() {
     return {
@@ -47,7 +49,7 @@ export default {
           sender: {
             id: 1,
             name: "Chat creator",
-            avatar: require("../assets/avatar-default.jpg")
+            avatar: AVATAR
           },
           receiver: this.channelId,
           text: "Hi! This message has been sent yesterday",
@@ -61,7 +63,7 @@ export default {
           sender: {
             id: 1,
             name: "Chat creator",
-            avatar: require("../assets/avatar-default.jpg")
+            avatar: AVATAR
           },
           receiver: this.channelId,
           text: "This message has been posted just an hour ago",
@@ -75,7 +77,7 @@ export default {
           sender: {
             id: 1,
             name: "Chat creator",
-            avatar: require("../assets/avatar-default.jpg")
+            avatar: AVATAR
           },
           receiver: this.channelId,
           text: "And this one too.\n\nNow type yours 😃",
@@ -93,12 +95,12 @@ export default {
   methods: {
     sendMessage() {
       if (!this.currentMessage || this.currentMessage === "") return;
-      this.messages.splice(
-        this.messages.length,
-        0,
-        this.makeMessage(this.currentMessage)
-      );
+      this.putMessage(this.makeMessage(this.currentMessage));
       this.currentMessage = "";
+    },
+
+    putMessage(message) {
+      this.messages.splice(this.messages.length, 0, message);
     },
 
     makeMessage(text) {
@@ -107,7 +109,7 @@ export default {
         sender: {
           id: this.userId,
           name: this.userId,
-          avatar: require("../assets/avatar-default.jpg")
+          avatar: null
         },
         receiver: this.channelId,
         text: text,
